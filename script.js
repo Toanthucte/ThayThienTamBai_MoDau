@@ -364,7 +364,7 @@ function playQuestionVoice(questionId) {
     questionVoice = new Howl({
         src: [`sounds/questions/${questionId}.mp3`],
         html5: true,
-        volume: 1.0
+        volume: 0.1
     });
 
     questionVoice.play();
