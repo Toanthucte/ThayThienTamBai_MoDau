@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L5P</title>
+    <link rel="stylesheet" href="style.css">
+<!-- ➤ Chèn vào phần <head> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
+</head>
+<body>
+    <div class="quiz-container">
+    <label for="quiz-select">Chọn bộ câu hỏi:</label>
+    <select id="quiz-select">
+        <option value="output_quiz_data.json">Bộ câu hỏi 1</option>
+        <option value="output_quiz_data_2.json">Bộ câu hỏi 2</option>
+        <!-- Thêm các bộ khác nếu có -->
+    </select>
+    <!-- ...existing code... -->
+        <h1>Lời Nói Đầu</h1>
+    <!-- ➤ Thêm nút toàn màn hình sau tiêu đề -->
+     <!-- ...existing code... -->
+        <button id="bgm-toggle" class="bgm-toggle">Bật Nhạc Nền</button>
+    <!-- ...existing code... -->
+    <button id="fullscreen-button" class="fullscreen-button">Toàn Màn Hình</button>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+            <span class="progress-text" id="progressText">0/0</span>
+        </div>
+
+        <div class="timer-controls-container">
+            <div id="timerDisplay" class="timer-display">00:00</div>
+            <div class="toggle-switch">
+                <input type="checkbox" id="timerToggle" checked>
+                <label for="timerToggle" class="slider"></label>
+                <span class="toggle-text">Hẹn giờ</span>
+            </div>
+        </div>
+
+        <div id="question-area" class="question-area">
+            <p id="question-text" class="question-text">Câu hỏi sẽ hiển thị ở đây.</p>
+            <div id="choices-container" class="choices-container">
+                </div>
+            <button id="submit-button" class="submit-button">Kiểm Tra</button>
+            <button id="next-button" class="next-button hidden">Câu Kế Tiếp</button>
+        </div>
+
+        <div id="explanation-area" class="explanation-area hidden">
+            <p id="explanation-text" class="explanation-text"></p>
+            <button id="continue-button" class="continue-button hidden">Tiếp Tục</button>
+        </div>
+
+        <div id="result-area" class="result-area hidden">
+            <h2 id="result-title"></h2>
+            <p id="score-text" class="score-text"></p>
+            <p id="feedback-text" class="feedback-text"></p>
+            <button id="restart-button" class="restart-button">Chơi Lại</button>
+            <button id="review-button" class="review-button hidden">Xem Lại Câu Sai</button>
+        </div>
+    </div>
+
+    <!-- ➤ Thêm Howler.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
