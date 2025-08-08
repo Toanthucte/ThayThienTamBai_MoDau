@@ -508,3 +508,15 @@ function speakText(text, gender = 'female') {
     if (voice) utter.voice = voice;
     window.speechSynthesis.speak(utter);
 }
+// Biến để kiểm tra tương tác lần đầu
+let isFirstInteraction = true;
+
+// ➤ Cho phép phát âm thanh sau lần click đầu tiên
+document.body.addEventListener('click', () => {
+    if (isFirstInteraction) {
+        // Đọc lại câu hỏi đầu tiên khi có tương tác đầu tiên
+        const currentQuestion = data[currentQuestionIndex];
+        speakText(currentQuestion.questionText, 'female');
+        isFirstInteraction = false;
+    }
+}, { once: true });
