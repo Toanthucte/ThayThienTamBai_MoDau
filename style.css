@@ -451,3 +451,15 @@ input:checked + .slider:before {
     padding: 8px 16px;
     font-size: 16px;
 }
+.explanation-area {
+    background: #fffbe6;
+    border: 2px solid #f1c40f;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin: 20px 0;
+    box-shadow: 0 4px 16px rgba(241, 196, 15, 0.15);
+    color: #b9770e;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: box-shadow 0.3s;
+}
