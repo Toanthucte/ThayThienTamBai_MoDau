@@ -148,7 +148,7 @@ function displayQuestion() {
 
     const currentQuestion = data[currentQuestionIndex];
     // ➤ Phát âm thanh đọc câu hỏi
-    playQuestionVoice(currentQuestion.id);
+    speakText(currentQuestion.questionText, 'female');
     questionText.textContent = currentQuestion.questionText; // SỬA: 'question' -> 'questionText'
 
     choicesContainer.innerHTML = ''; // Xóa các lựa chọn cũ
@@ -169,9 +169,10 @@ function displayQuestion() {
         button.textContent = choiceText;
         button.classList.add('choice-button');
         button.dataset.originalIndex = originalChoices.indexOf(choiceText);
-
+        
         button.addEventListener('click', () => {
             audioClick.play();
+            speakText(choiceText, 'female'); // Thêm dòng này để phát âm thanh đáp án
             document.querySelectorAll('.choice-button').forEach(btn => {
                 btn.classList.remove('selected', 'correct', 'wrong'); // Xóa tất cả trạng thái
                 btn.disabled = false;
@@ -256,6 +257,10 @@ function checkAnswer(isTimeout = false) {
     submitButton.classList.add('hidden');
     explanationArea.classList.remove('hidden');
     explanationText.textContent = currentQuestion.explanation;
+    // Phát âm thanh giải thích sau 8 giây
+        setTimeout(() => {
+        speakText(currentQuestion.explanation, 'male');
+    }, 8000); // 8000 ms = 8 giây
 
     if (currentQuestionIndex < data.length - 1) {
         continueButton.classList.remove('hidden');
@@ -354,31 +359,6 @@ timerToggle.addEventListener('change', () => {
         }
     }
 });
-
-
-
-
-function playQuestionVoice(questionId) {
-    stopQuestionVoice(); // Đảm bảo dừng âm thanh trước khi phát
-
-    questionVoice = new Howl({
-        src: [`sounds/questions/${questionId}.mp3`],
-        html5: true,
-        volume: 0.1
-    });
-
-    questionVoice.play();
-}
-
-
-
-
-function stopQuestionVoice() {
-    if (questionVoice && questionVoice.playing()) {
-        questionVoice.stop();
-    }
-}
-
 
 // Khởi tạo trò chơi khi trang web tải xong
 // Hàm tải dữ liệu câu hỏi từ file JSON
@@ -495,4 +475,36 @@ if (quizSelect) {
     quizSelect.addEventListener('change', function() {
         loadQuizData(this.value);
     });
+}
+
+// Hàm phát âm thanh giải thích
+function playExplanationVoice(text) {
+    // Dừng mọi phát âm cũ
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'vi-VN'; // Tiếng Việt
+    utter.rate = 1; // Tốc độ đọc
+    window.speechSynthesis.speak(utter);
+}
+
+// ➤ Cho phép phát âm thanh sau lần click đầu tiên
+document.body.addEventListener('click', () => {
+    if (questionVoice && !questionVoice.playing()) {
+        questionVoice.play();
+    }
+}, { once: true });
+
+function speakText(text, gender = 'female') {
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'vi-VN';
+    utter.rate = 1;
+    // Chọn voice nữ nếu có
+    const voices = window.speechSynthesis.getVoices().filter(v => v.lang === 'vi-VN');
+    let voice = voices.find(v => v.name.toLowerCase().includes('nữ')) || voices[0];
+    if (gender === 'male') {
+        voice = voices.find(v => v.name.toLowerCase().includes('nam')) || voices[0];
+    }
+    if (voice) utter.voice = voice;
+    window.speechSynthesis.speak(utter);
 }
