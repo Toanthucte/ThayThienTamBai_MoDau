@@ -479,6 +479,7 @@ function toggleBgm() {
         bgm.pause();
     } else {
         bgm.play();
+        bgm.volume(0.1); // Đặt lại volume sau khi play, giúp mobile nhận giá trị này
     }
     isBgmPlaying = !isBgmPlaying;
 }
